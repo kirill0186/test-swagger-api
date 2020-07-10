@@ -1,0 +1,19 @@
+ReportSection:
+  type: "object"
+  properties:
+    issueKey:
+      type: "string"
+    type:
+      $ref: "../swagger.yml#/components/schemas/SectionType"
+    platform:
+      $ref: "../swagger.yml#/components/schemas/SectionPlatform"
+    hours:
+      type: "number"
+    jiraHours:
+      type: "number"
+    description:
+      type: "array"
+      items:
+        $ref: "../swagger.yml#/components/schemas/DescriptionItem"
+    comment:
+      type: "string"

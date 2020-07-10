@@ -1,0 +1,21 @@
+ReportTemplateSection:
+  type: "object"
+  properties:
+    issueKey:
+      type: "string"
+    type:
+      $ref: "../swagger.yml#/components/schemas/SectionType"
+    platform:
+      $ref: "../swagger.yml#/components/schemas/SectionPlatform"
+    hours:
+      type: "number"
+      example: 72
+    jiraHours:
+      type: "number"
+      example: 72
+    description:
+      type: "string"
+      example: ""
+    comment:
+      type: "string"
+      example: null

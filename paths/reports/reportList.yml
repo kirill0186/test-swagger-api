@@ -1,0 +1,100 @@
+get:
+  tags:
+    - "reports"
+  summary: "Получить список отчётов проекта"
+  parameters:
+    - name: "projectId"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+    - name: "type"
+      in: "query"
+      schema:
+        $ref: "../../swagger.yml#/components/schemas/ProjectFilters"
+    - name: "monthPerPage"
+      in: "query"
+      required: true
+      schema:
+        type: "number"
+    - name: "page"
+      in: "query"
+      required: true
+      schema:
+        type: "number"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "object"
+                properties:
+                  itemsCount:
+                    type: "number"
+                  pageCount:
+                    type: "number"
+                  currentPage:
+                    type: "number"
+                  items:
+                    type: "array"
+                    items:
+                      $ref: '../../swagger.yml#/components/schemas/ReportInfo'
+
+
+post:
+  tags:
+    - "reports"
+  summary: "Добавить новый отчёт"
+  parameters:
+    - name: "projectId"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+    - name: "body"
+      in: "body"
+      required: true
+      schema:
+        type: "object"
+        properties:
+          dateFrom:
+            type: "string"
+            format: "date"
+          dateTo:
+            type: "string"
+            format: "date"
+          sections:
+            type: "array"
+            items:
+              $ref: "../../swagger.yml#/components/schemas/ReportSection"
+          comment:
+            type: "string"
+          meta:
+            $ref: "../../swagger.yml#/components/schemas/ReportMeta"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "boolean"
+                example: true

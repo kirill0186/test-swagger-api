@@ -1,0 +1,26 @@
+DescriptionMeta:
+  type: "object"
+  properties:
+    blocks:
+      type: "array"
+      items:
+        type: "object"
+        properties:
+          key:
+            type: "string"
+          type:
+            type: "string"
+          inlineStyleRanges:
+            type: "array"
+            items:
+              type: "string"
+          entityRanges:
+            type: "array"
+            items:
+              type: "string"
+          data:
+            type: "object"
+    entityMap:
+      type: "object"
+      items:
+        type: "string"

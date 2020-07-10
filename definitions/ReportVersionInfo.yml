@@ -1,0 +1,11 @@
+ReportVersionInfo:
+  type: "object"
+  properties:
+    version:
+      type: "string"
+      example: VA
+    createdAt:
+      type: "string"
+      format: "date"
+    status:
+      $ref: '../swagger.yml#/components/schemas/ReportStatus'

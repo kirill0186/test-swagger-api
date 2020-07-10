@@ -1,0 +1,66 @@
+put:
+  tags:
+    - "comments"
+  summary: "Обновить комментарий"
+  parameters:
+    - name: "commentId"
+      in: "path"
+      schema:
+        type: "string"
+      description: "Идентификатор коммента"
+      required: true
+    - name: "body"
+      in: "body"
+      required: true
+      schema:
+        type: "object"
+        properties:
+          text:
+            type: "string"
+            example: "Dopolnitelni comment dlia odnoi stroki. New Text"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                $ref: "../../swagger.yml#/components/schemas/ReviewComment"
+
+
+delete:
+  tags:
+    - "comments"
+  summary: "Удалить комментарий"
+  parameters:
+    - name: "commentId"
+      in: "path"
+      schema:
+        type: "string"
+      description: "Идентификатор коммента"
+      required: true
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "boolean"
+

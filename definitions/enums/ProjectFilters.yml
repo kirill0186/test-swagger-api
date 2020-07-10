@@ -1,0 +1,6 @@
+ProjectFilters:
+  required: true
+  type: "string"
+  enum:
+    - ALL
+    - ACTUAL

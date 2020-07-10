@@ -1,0 +1,76 @@
+openapi: 3.0.3
+
+
+info:
+  version: 1.0.0
+  title: Simple API
+  description: A simple API to learn how to write OpenAPI Specification
+
+
+security:
+  - bearerAuth: []
+
+
+paths:
+  /projects:
+    $ref: 'paths/projects/projectList.yml'
+  /projects/{projectId}/available-periods:
+    $ref: 'paths/projects/projectAvailablePeriods.yml'
+
+  /comments/{commentId}:
+    $ref: 'paths/comments/commentItem.yml'
+  /reports/{reportId}/versions/{reportVersion}/comments:
+    $ref: 'paths/comments/commentList.yml'
+
+  /projects/{projectId}/reports:
+    $ref: 'paths/reports/reportList.yml'
+  /projects/{projectId}/reports/template:
+    $ref: 'paths/reports/reportTemplate.yml'
+  /reports/{reportId}:
+    $ref: 'paths/reports/reportItem.yml'
+  /reports/{reportId}/versions:
+    $ref: 'paths/reports/reportVersionList.yml'
+  /reports/{reportId}/versions/{versionNumber}:
+    $ref: 'paths/reports/reportVersionItem.yml'
+
+components:
+  schemas:
+    ProjectInfo:
+      $ref: 'definitions/ProjectInfo.yml#/ProjectInfo'
+    DateRange:
+      $ref: 'definitions/DateRange.yml#/DateRange'
+    ReviewComment:
+      $ref: 'definitions/ReviewComment.yml#/ReviewComment'
+    ReportInfo:
+      $ref: 'definitions/ReportInfo.yml#/ReportInfo'
+    ReportSection:
+      $ref: 'definitions/ReportSection.yml#/ReportSection'
+    DescriptionItem:
+      $ref: 'definitions/DescriptionItem.yml#/DescriptionItem'
+    ReportMeta:
+      $ref: 'definitions/ReportMeta.yml#/ReportMeta'
+    SectionMeta:
+      $ref: 'definitions/SectionMeta.yml#/SectionMeta'
+    DescriptionMeta:
+      $ref: 'definitions/DescriptionMeta.yml#/DescriptionMeta'
+    ReportTemplateSection:
+      $ref: 'definitions/ReportTemplateSection.yml#/ReportTemplateSection'
+    ReportVersionInfo:
+      $ref: 'definitions/ReportVersionInfo.yml#/ReportVersionInfo'
+
+
+    # Enums
+    ReportStatus:
+      $ref: 'definitions/enums/ReportStatus.yml#/ReportStatus'
+    ProjectFilters:
+      $ref: 'definitions/enums/ProjectFilters.yml#/ProjectFilters'
+    SectionType:
+      $ref: 'definitions/enums/SectionType.yml#/SectionType'
+    SectionPlatform:
+      $ref: 'definitions/enums/SectionPlatform.yml#/SectionPlatform'
+
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

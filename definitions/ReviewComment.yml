@@ -1,0 +1,19 @@
+ReviewComment:
+  type: "object"
+  properties:
+    id:
+      type: "string"
+    sectionId:
+      type: "string"
+    text:
+      type: "string"
+    createdAt:
+      type: "string"
+      format: "date"
+    updatedAt:
+      type: "string"
+      format: "date"
+    relatedTasks:
+      type: "array"
+      items:
+        type: "string"

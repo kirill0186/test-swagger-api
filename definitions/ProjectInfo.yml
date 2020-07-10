@@ -1,0 +1,12 @@
+ProjectInfo:
+  type: "object"
+  properties:
+    id:
+      type: "string"
+      example: VA
+    title:
+      type: "string"
+    workedHours:
+      type: "number"
+    status:
+      $ref: 'enums/ReportStatus.yml#/ReportStatus'

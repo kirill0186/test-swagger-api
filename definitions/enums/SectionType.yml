@@ -1,0 +1,6 @@
+SectionType:
+  type: "string"
+  enum:
+    - DEVELOP
+    - DESIGN
+    - MANAGMENT

@@ -1,0 +1,54 @@
+get:
+  tags:
+    - "projects"
+  summary: "Получить список проектов"
+  description: "Какое-то более развёрнутое описание"
+  parameters:
+    - name: "type"
+      in: "query"
+      schema:
+        $ref: "../../swagger.yml#/components/schemas/ProjectFilters"
+    - name: "page"
+      in: "query"
+      schema:
+        type: "string"
+      description: "Текущая страница"
+      required: true
+    - name: "size"
+      in: "query"
+      schema:
+        type: "string"
+      description: "Количество элементов на странице"
+      required: true
+    - name: "search"
+      in: "query"
+      schema:
+        type: "string"
+      description: "Поиск по проектам"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "object"
+                properties:
+                  itemsCount:
+                    type: "number"
+                  pageCount:
+                    type: "number"
+                  currentPage:
+                    type: "number"
+                  items:
+                    type: "array"
+                    items:
+                      $ref: '../../swagger.yml#/components/schemas/ProjectInfo'

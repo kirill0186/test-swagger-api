@@ -1,0 +1,13 @@
+ReportInfo:
+  type: "object"
+  properties:
+    id:
+      type: "string"
+      example: VA
+    renge:
+      $ref: '../swagger.yml#/components/schemas/DateRange'
+    createdAt:
+      type: "string"
+      format: "date"
+    status:
+      $ref: '../swagger.yml#/components/schemas/ReportStatus'

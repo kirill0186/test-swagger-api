@@ -1,0 +1,9 @@
+DescriptionItem:
+  type: "object"
+  properties:
+    key:
+      type: "string"
+    text:
+      type: "string"
+    depth:
+      type: "number"

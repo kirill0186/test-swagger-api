@@ -1,0 +1,7 @@
+ReportStatus:
+  type: "string"
+  enum:
+    - OK
+    - DECLINED
+    - UNREPORTED
+    - REVIEW

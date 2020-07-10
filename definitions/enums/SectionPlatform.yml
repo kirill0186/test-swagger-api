@@ -1,0 +1,8 @@
+SectionPlatform:
+  type: "string"
+  enum:
+    - IOS
+    - ANDROID
+    - MIDDLE
+    - WEB
+    - undefined

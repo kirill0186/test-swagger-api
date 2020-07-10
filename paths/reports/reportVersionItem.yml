@@ -1,0 +1,50 @@
+get:
+  tags:
+    - "reports"
+  summary: "Опреденная версия отчёта"
+  parameters:
+    - name: "reportId"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+    - name: "versionNumber"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "object"
+                properties:
+                  id:
+                    type: "string"
+                  version:
+                    type: "number"
+                  dateFrom:
+                    type: "string"
+                    format: "date"
+                  dateTo:
+                    type: "string"
+                    format: "date"
+                  sections:
+                    type: "array"
+                    items:
+                      $ref: "../../swagger.yml#/components/schemas/ReportSection"
+                  comment:
+                    type: "string"
+                  meta:
+                    $ref: "../../swagger.yml#/components/schemas/ReportMeta"

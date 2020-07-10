@@ -1,0 +1,91 @@
+get:
+  tags:
+    - "comments"
+  summary: "Получить комментарии"
+  parameters:
+    - name: "reportId"
+      in: "path"
+      schema:
+        type: "string"
+      description: "Идентификатор отчёта"
+      required: true
+    - name: "reportVersion"
+      in: "path"
+      description: "Версия отчёта"
+      required: true
+      schema:
+        type: "string"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "object"
+                properties:
+                  reportId:
+                    type: "string"
+                  reportVersions:
+                    type: "string"
+                  reviewComments:
+                    type: "array"
+                    items:
+                      $ref: "../../swagger.yml#/components/schemas/ReviewComment"
+
+
+post:
+  tags:
+    - "comments"
+  summary: "Добавить комментарий"
+  parameters:
+    - name: "reportId"
+      in: "path"
+      description: "Идентификатор отчёта"
+      required: true
+      schema:
+        type: "string"
+    - name: "reportVersion"
+      in: "path"
+      description: "Версия отчёта"
+      required: true
+      schema:
+        type: "string"
+    - name: "body"
+      in: "body"
+      required: true
+      schema:
+        type: "object"
+        properties:
+          sectionId:
+            type: "string"
+          relatedTasks:
+            type: "array"
+            items:
+              type: "string"
+          text:
+            type: "string"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                $ref: "../../swagger.yml#/components/schemas/ReviewComment"

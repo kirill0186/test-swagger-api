@@ -1,0 +1,44 @@
+get:
+  tags:
+    - "reports"
+  summary: "Шаблон отчёта"
+  parameters:
+    - name: "projectId"
+      in: "path"
+      required: true
+      schema:
+        type: "string"
+    - name: "start"
+      in: "query"
+      required: true
+      schema:
+        type: "string"
+        format: "date"
+    - name: "end"
+      in: "query"
+      required: true
+      schema:
+        type: "string"
+        format: "date"
+  responses:
+    default:
+      description: ""
+      content:
+        application/json:
+          schema:
+            type: "object"
+            properties:
+              errorMessage:
+                type: "string"
+                example: null
+              errorCode:
+                type: "number"
+                example: 0
+              result:
+                type: "object"
+                properties:
+                  templateSections:
+                    type: "array"
+                    items:
+                      $ref: "../../swagger.yml#/components/schemas/ReportTemplateSection"
+

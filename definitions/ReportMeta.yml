@@ -1,0 +1,7 @@
+ReportMeta:
+  type: "object"
+  properties:
+    sections:
+      type: "array"
+      items:
+        $ref: "../swagger.yml#/components/schemas/SectionMeta"

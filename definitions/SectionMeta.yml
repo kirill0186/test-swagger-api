@@ -1,0 +1,9 @@
+SectionMeta:
+  type: "object"
+  properties:
+    issueKey:
+      type: "string"
+    description:
+      type: "array"
+      items:
+        $ref: "../swagger.yml#/components/schemas/DescriptionMeta"
