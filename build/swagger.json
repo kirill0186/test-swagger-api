@@ -1,0 +1,1204 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "version": "1.0.0",
+    "title": "Simple API",
+    "description": "A simple API to learn how to write OpenAPI Specification"
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/projects": {
+      "get": {
+        "tags": [
+          "projects"
+        ],
+        "summary": "Получить список проектов",
+        "description": "Какое-то более развёрнутое описание",
+        "parameters": [
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ProjectFilters"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Текущая страница",
+            "required": true
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Количество элементов на странице",
+            "required": true
+          },
+          {
+            "name": "search",
+            "in": "query",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Поиск по проектам"
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "itemsCount": {
+                          "type": "number"
+                        },
+                        "pageCount": {
+                          "type": "number"
+                        },
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ProjectInfo"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/available-periods": {
+      "get": {
+        "tags": [
+          "projects"
+        ],
+        "summary": "Список возможных периодов отчета",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "dateList": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/DateRange"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/comments/{commentId}": {
+      "put": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Обновить комментарий",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Идентификатор коммента",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "text": {
+                  "type": "string",
+                  "example": "Dopolnitelni comment dlia odnoi stroki. New Text"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/ReviewComment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Удалить комментарий",
+        "parameters": [
+          {
+            "name": "commentId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Идентификатор коммента",
+            "required": true
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "boolean"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{reportId}/versions/{reportVersion}/comments": {
+      "get": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Получить комментарии",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "schema": {
+              "type": "string"
+            },
+            "description": "Идентификатор отчёта",
+            "required": true
+          },
+          {
+            "name": "reportVersion",
+            "in": "path",
+            "description": "Версия отчёта",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "reportId": {
+                          "type": "string"
+                        },
+                        "reportVersions": {
+                          "type": "string"
+                        },
+                        "reviewComments": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReviewComment"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "comments"
+        ],
+        "summary": "Добавить комментарий",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "description": "Идентификатор отчёта",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "reportVersion",
+            "in": "path",
+            "description": "Версия отчёта",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "sectionId": {
+                  "type": "string"
+                },
+                "relatedTasks": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "text": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "$ref": "#/components/schemas/ReviewComment"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/reports": {
+      "get": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Получить список отчётов проекта",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "type",
+            "in": "query",
+            "schema": {
+              "$ref": "#/components/schemas/ProjectFilters"
+            }
+          },
+          {
+            "name": "monthPerPage",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "itemsCount": {
+                          "type": "number"
+                        },
+                        "pageCount": {
+                          "type": "number"
+                        },
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReportInfo"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Добавить новый отчёт",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dateFrom": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "dateTo": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportSection"
+                  }
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "meta": {
+                  "$ref": "#/components/schemas/ReportMeta"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/projects/{projectId}/reports/template": {
+      "get": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Шаблон отчёта",
+        "parameters": [
+          {
+            "name": "projectId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "start",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          },
+          {
+            "name": "end",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "templateSections": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReportTemplateSection"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{reportId}": {
+      "get": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Актуальная версия отчёта",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "number"
+                        },
+                        "dateFrom": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "dateTo": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "sections": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReportSection"
+                          }
+                        },
+                        "comment": {
+                          "type": "string"
+                        },
+                        "meta": {
+                          "$ref": "#/components/schemas/ReportMeta"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{reportId}/versions": {
+      "get": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Список версий отчёта",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "number"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "itemsCount": {
+                          "type": "number"
+                        },
+                        "pageCount": {
+                          "type": "number"
+                        },
+                        "currentPage": {
+                          "type": "number"
+                        },
+                        "id": {
+                          "type": "string",
+                          "description": "Идентификатор отчёта"
+                        },
+                        "dateFrom": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "dateTo": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "items": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReportVersionInfo"
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Создание новой версии отчёта",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "dateFrom": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "dateTo": {
+                  "type": "string",
+                  "format": "date"
+                },
+                "sections": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/ReportSection"
+                  }
+                },
+                "comment": {
+                  "type": "string"
+                },
+                "meta": {
+                  "$ref": "#/components/schemas/ReportMeta"
+                }
+              }
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "boolean",
+                      "example": true
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/reports/{reportId}/versions/{versionNumber}": {
+      "get": {
+        "tags": [
+          "reports"
+        ],
+        "summary": "Опреденная версия отчёта",
+        "parameters": [
+          {
+            "name": "reportId",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "versionNumber",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "errorMessage": {
+                      "type": "string",
+                      "example": null
+                    },
+                    "errorCode": {
+                      "type": "number",
+                      "example": 0
+                    },
+                    "result": {
+                      "type": "object",
+                      "properties": {
+                        "id": {
+                          "type": "string"
+                        },
+                        "version": {
+                          "type": "number"
+                        },
+                        "dateFrom": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "dateTo": {
+                          "type": "string",
+                          "format": "date"
+                        },
+                        "sections": {
+                          "type": "array",
+                          "items": {
+                            "$ref": "#/components/schemas/ReportSection"
+                          }
+                        },
+                        "comment": {
+                          "type": "string"
+                        },
+                        "meta": {
+                          "$ref": "#/components/schemas/ReportMeta"
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ProjectInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "VA"
+          },
+          "title": {
+            "type": "string"
+          },
+          "workedHours": {
+            "type": "number"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReportStatus"
+          }
+        }
+      },
+      "DateRange": {
+        "type": "object",
+        "properties": {
+          "from": {
+            "type": "string",
+            "format": "date"
+          },
+          "to": {
+            "type": "string",
+            "format": "date"
+          }
+        }
+      },
+      "ReviewComment": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "sectionId": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "relatedTasks": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReportInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "VA"
+          },
+          "renge": {
+            "$ref": "#/components/schemas/DateRange"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReportStatus"
+          }
+        }
+      },
+      "ReportSection": {
+        "type": "object",
+        "properties": {
+          "issueKey": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SectionType"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/SectionPlatform"
+          },
+          "hours": {
+            "type": "number"
+          },
+          "jiraHours": {
+            "type": "number"
+          },
+          "description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DescriptionItem"
+            }
+          },
+          "comment": {
+            "type": "string"
+          }
+        }
+      },
+      "DescriptionItem": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "depth": {
+            "type": "number"
+          }
+        }
+      },
+      "ReportMeta": {
+        "type": "object",
+        "properties": {
+          "sections": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SectionMeta"
+            }
+          }
+        }
+      },
+      "SectionMeta": {
+        "type": "object",
+        "properties": {
+          "issueKey": {
+            "type": "string"
+          },
+          "description": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/DescriptionMeta"
+            }
+          }
+        }
+      },
+      "DescriptionMeta": {
+        "type": "object",
+        "properties": {
+          "blocks": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "key": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "inlineStyleRanges": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "entityRanges": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                },
+                "data": {
+                  "type": "object"
+                }
+              }
+            }
+          },
+          "entityMap": {
+            "type": "object",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "ReportTemplateSection": {
+        "type": "object",
+        "properties": {
+          "issueKey": {
+            "type": "string"
+          },
+          "type": {
+            "$ref": "#/components/schemas/SectionType"
+          },
+          "platform": {
+            "$ref": "#/components/schemas/SectionPlatform"
+          },
+          "hours": {
+            "type": "number",
+            "example": 72
+          },
+          "jiraHours": {
+            "type": "number",
+            "example": 72
+          },
+          "description": {
+            "type": "string",
+            "example": ""
+          },
+          "comment": {
+            "type": "string",
+            "example": null
+          }
+        }
+      },
+      "ReportVersionInfo": {
+        "type": "object",
+        "properties": {
+          "version": {
+            "type": "string",
+            "example": "VA"
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date"
+          },
+          "status": {
+            "$ref": "#/components/schemas/ReportStatus"
+          }
+        }
+      },
+      "ReportStatus": {
+        "type": "string",
+        "enum": [
+          "OK",
+          "DECLINED",
+          "UNREPORTED",
+          "REVIEW"
+        ]
+      },
+      "ProjectFilters": {
+        "required": true,
+        "type": "string",
+        "enum": [
+          "ALL",
+          "ACTUAL"
+        ]
+      },
+      "SectionType": {
+        "type": "string",
+        "enum": [
+          "DEVELOP",
+          "DESIGN",
+          "MANAGMENT"
+        ]
+      },
+      "SectionPlatform": {
+        "type": "string",
+        "enum": [
+          "IOS",
+          "ANDROID",
+          "MIDDLE",
+          "WEB",
+          "undefined"
+        ]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}
